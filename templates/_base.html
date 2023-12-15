@@ -75,6 +75,9 @@
                                 {% endif %}
                             </ul>
                         </li>
+                        <!-- Link to go at open chain Data -->
+                        <li><a class="dropdown-item" href="{% url 'open_chain_data' 'NIFTY' %}">Open Chain Data(NIFTY)</a></li>
+
                     </ul>
                     {% if blog_posts.count >= 1 %}
                     <form class="d-flex" method="get" action="{% url 'blog_posts_search' %}">

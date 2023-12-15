@@ -9,8 +9,11 @@ from django.urls import reverse_lazy
 
 from .serializers import BlogPostSerializer
 from .permissions import IsOwnerOrReadOnly
-from .models import EmailMessage, BlogPost
+from .models import EmailMessage, BlogPost, OpenChain
 from .forms import ContactForm
+from datetime import datetime
+#  Scraping Logic
+from .OCD_scraping import scraping
 
 
 class HomePageView(TemplateView):
@@ -159,3 +162,58 @@ class BlogPostDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = BlogPost.objects.all().filter(status="published")
     serializer_class = BlogPostSerializer
+    
+    
+class Open_Chain_Data(TemplateView):
+    template_name = "website/OCD.html"
+    
+    def get(self,request,**kwargs):
+        symbol = kwargs.get('symbol')
+        context = super().get_context_data(**kwargs)
+        
+        #  future logic
+        # if OCD.updation_date == None or OCD.updation_date != datetime.now().strftime("%Y-%m-%d"):
+        pe_json, ce_json, updation_time = scraping.get_data(symbol)
+        final_list = pe_json + ce_json  
+        print(final_list)
+        counter = 0
+        for item in final_list:
+            OCD = OpenChain()
+            print("ITEM COUNTER", counter+1)
+            if item is None:
+                    continue
+            existing_record = OpenChain.objects.filter(
+            expiryDate=datetime.strptime(item['expiryDate'], '%d-%b-%Y').strftime('%Y-%m-%d'),
+            strikePrice=item['strikePrice']
+        ).first()
+
+            if existing_record:
+                print("Record already exists. Skipping.")
+            else:
+                for key, value in item.items():
+                    if key == 'expiryDate':
+                        value = datetime.strptime(value, '%d-%b-%Y').strftime('%Y-%m-%d')
+                    setattr(OCD, key, value)
+            for key, value in item.items():
+                if key == 'expiryDate':
+                    value = datetime.strptime(value, '%d-%b-%Y').strftime('%Y-%m-%d')
+                setattr(OCD, key, value)
+                
+            OCD.updation_date = updation_time
+            print("OCD save")
+            OCD.save()
+        column_names = OpenChain._meta.fields
+        
+        context["pe_data"]= ce_json
+        context["ce_data"]= pe_json
+        context["column_names"]= column_names
+            
+
+        return self.render_to_response(context)
+
+    
+            
+
+        
+        
+        

@@ -70,3 +70,32 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog_article", args=[str(self.id)])
+
+
+
+
+class OpenChain(models.Model):
+    symbol = models.CharField(max_length = 20)
+    strikePrice = models.DecimalField(decimal_places = 10, max_digits=25)
+    expiryDate = models.DateField()
+    underlying = models.CharField()
+    identifier = models.CharField()
+    openInterest = models.DecimalField(decimal_places = 10, max_digits=25)
+    changeinOpenInterest = models.DecimalField(decimal_places = 10, max_digits=25)
+    pchangeinOpenInterest = models.DecimalField(decimal_places = 10, max_digits=25)
+    totalTradedVolume = models.DecimalField(decimal_places = 10, max_digits=25)
+    impliedVolatility = models.DecimalField(decimal_places = 10, max_digits=25)
+    lastPrice =  models.DecimalField(decimal_places = 10, max_digits=25)
+    change = models.DecimalField(decimal_places = 10, max_digits=25)
+    pChange = models.DecimalField(decimal_places = 10, max_digits=25)
+    totalBuyQuantity = models.DecimalField(decimal_places = 10, max_digits=25)
+    totalSellQuantity =  models.DecimalField(decimal_places = 10, max_digits=25)
+    bidQty = models.DecimalField(decimal_places = 10, max_digits=25)
+    bidprice =  models.DecimalField(decimal_places = 10, max_digits=25)
+    askQty =  models.DecimalField(decimal_places = 10, max_digits=25)
+    askPrice = models.DecimalField(decimal_places = 10, max_digits=25)
+    underlyingValue = models.DecimalField(decimal_places = 10, max_digits=25)
+    updation_date = models.CharField()
+    
+    def __str__(self):
+        return self.symbol

@@ -12,6 +12,7 @@ from .views import (
     EmailSuccess,
     BlogPostListAPIView,
     BlogPostDetailAPIView,
+    Open_Chain_Data,
 )
 
 urlpatterns = [
@@ -39,4 +40,6 @@ urlpatterns = [
         BlogPostDetailAPIView.as_view(),
         name="blog_detail_api",
     ),
+    # Path to naviagte to open chain data webpage
+    path("open_chain_data/<str:symbol>", Open_Chain_Data.as_view(), name="open_chain_data")
 ]

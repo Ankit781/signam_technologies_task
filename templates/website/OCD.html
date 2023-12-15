@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+
+    {% if pe_data or ce_data%}
+    
+    <div class="cont" style="font-size:12px;margin-top:10px;">
+    <div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+       {% for column in column_names%}
+                    <th scope="col" style="padding:2px;text-align:center">{{column.attname}}</th>
+                {% endfor %} 
+          </tr>
+        </thead>
+        <tbody>
+        {% for pe in pe_data%}
+          <tr>
+            {% for key,value in pe.items%}
+            <td style="padding:1px;">{{value}}</td>
+            {%endfor%}
+          </tr>
+        {%endfor%}
+        {% for ce in ce_data%}
+          <tr>
+            {% for key,value in ce.items%}
+            <td style="padding:1px;">{{value}}</td>
+            {%endfor%}
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+
+    {%endif%}
+
+{% endblock %}
