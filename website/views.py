@@ -173,7 +173,7 @@ class Open_Chain_Data(TemplateView):
         
         #  future logic
         # if OCD.updation_date == None or OCD.updation_date != datetime.now().strftime("%Y-%m-%d"):
-        pe_json, ce_json, updation_time = scraping.get_data(symbol)
+        pe_json, ce_json, updation_time,column_names = scraping.get_data(symbol)
         final_list = pe_json + ce_json  
         print(final_list)
         counter = 0
@@ -202,7 +202,6 @@ class Open_Chain_Data(TemplateView):
             OCD.updation_date = updation_time
             print("OCD save")
             OCD.save()
-        column_names = OpenChain._meta.fields
         
         context["pe_data"]= ce_json
         context["ce_data"]= pe_json

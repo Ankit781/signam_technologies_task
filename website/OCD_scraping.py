@@ -48,11 +48,12 @@ class scraping:
         pe_json = json.loads(pe_data_json)
         ce_json = json.loads(ce_data_json)
         
+        column_names = list(pe_data.keys())
 
 
         updation_time = current_date.strftime("%Y-%m-%d")
         print("DATA IS SCRAPED ")
-        return  pe_json,ce_json,updation_time
+        return  pe_json,ce_json,updation_time,column_names
     
     
 

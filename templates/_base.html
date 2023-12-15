@@ -54,6 +54,9 @@
                                 {% endif %}
                             </ul>
                         </li>
+                        <li  class="nav-item">
+                            <a class="nav-link" href="{% url 'open_chain_data' 'NIFTY' %}">Open Chain Data(NIFTY)</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                         </li>
@@ -76,7 +79,7 @@
                             </ul>
                         </li>
                         <!-- Link to go at open chain Data -->
-                        <li><a class="dropdown-item" href="{% url 'open_chain_data' 'NIFTY' %}">Open Chain Data(NIFTY)</a></li>
+                        
 
                     </ul>
                     {% if blog_posts.count >= 1 %}
